@@ -104,21 +104,6 @@ describe('/api/returns', () => {
     expect(res.status).toBe(404);
   });
 
-  it('should return a rental if it is valid', async () => {
-    await exec();
-
-    const rentalInDb = await Rental.findOne({
-      'customer._id': customerId,
-      'movie._id': movieId
-    });
-
-    expect(rentalInDb).toHaveProperty('_id', rental._id);
-    expect(rentalInDb).toHaveProperty('customer.name', rental.customer.name);
-    expect(rentalInDb).toHaveProperty('customer.phone', rental.customer.phone);
-    expect(rentalInDb).toHaveProperty('movie.title', rental.movie.title);
-    expect(rentalInDb).toHaveProperty('movie.dailyRentalRate', rental.movie.dailyRentalRate);
-  });
-
   it('should set the return date if input is valid', async () => {
     await exec();
 
@@ -129,11 +114,6 @@ describe('/api/returns', () => {
 
     const diff = new Date() - rentalInDb.dateReturned;
 
-    expect(rentalInDb).toHaveProperty('_id', rental._id);
-    expect(rentalInDb).toHaveProperty('customer.name', rental.customer.name);
-    expect(rentalInDb).toHaveProperty('customer.phone', rental.customer.phone);
-    expect(rentalInDb).toHaveProperty('movie.title', rental.movie.title);
-    expect(rentalInDb).toHaveProperty('movie.dailyRentalRate', rental.movie.dailyRentalRate);
     expect(rentalInDb.dateReturned).toBeDefined();
     expect(diff).toBeLessThan(10 * 1000);
   });
@@ -155,5 +135,15 @@ describe('/api/returns', () => {
     const movieInDb = await Movie.findById(movieId);
 
     expect(movieInDb.numberInStock).toBe(movie.numberInStock + 1);
+  });
+
+  it('should return a rental if input is valid', async () => {
+    const res = await exec();
+
+    // const rentalInDb = await Rental.findById(rental._id);
+
+    expect(Object.keys(res.body)).toEqual(
+      expect.arrayContaining(['_id', 'customer', 'movie', 'dateOut', 'rentalFee', 'dateReturned'])
+    );
   });
 });

@@ -3,7 +3,6 @@ const { Rental, validateRental } = require('../models/rental-model');
 const { Movie } = require('../models/movie-model');
 const auth = require('../middleware/auth-middleware');
 const moment = require('moment');
-// const validateObjectId = require('../middleware/validateObjectId');
 
 const router = express.Router();
 
