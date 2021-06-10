@@ -3,6 +3,7 @@ const _ = require('lodash');
 const { Customer, validateCustomer } = require('../models/customer-model');
 const auth = require('../middleware/auth-middleware');
 const admin = require('../middleware/admin');
+const validate = require('../middleware/validate');
 const validateObjectId = require('../middleware/validateObjectId');
 
 const router = express.Router();
@@ -24,10 +25,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 });
 
 // Creating a customer
-router.post('/', auth, async (req, res) => {
-  const { error } = validateCustomer(req.body);
-  if (error) return res.status(400).send(error);
-
+router.post('/', [auth, validate(validateCustomer)], async (req, res) => {
   const customer = Customer(_.pick(req.body, ['name', 'isGold', 'phone']));
 
   const document = await customer.save();
@@ -36,10 +34,7 @@ router.post('/', auth, async (req, res) => {
 });
 
 // Updating a customer
-router.put('/:id', [auth, validateObjectId], async (req, res) => {
-  const { error } = validateCustomer(req.body);
-  if (error) return res.status(400).send(error);
-
+router.put('/:id', [auth, validateObjectId, validate(validateCustomer)], async (req, res) => {
   const customer = await Customer.findById(req.params.id);
 
   if (!customer) return res.status(404).send('The customer with the given ID was not found.');

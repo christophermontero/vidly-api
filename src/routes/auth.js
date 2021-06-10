@@ -3,14 +3,12 @@ const passwordComplexity = require('joi-password-complexity');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const { User } = require('../models/user-model');
+const validate = require('../middleware/validate');
 
 const router = express.Router();
 
 // Authenticating a user
-router.post('/', async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).send(error);
-
+router.post('/', validate(validateAuth), async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).send('Invalid email or password!.');
 
@@ -23,7 +21,7 @@ router.post('/', async (req, res) => {
 });
 
 // Validation user schema
-function validate(req) {
+function validateAuth(req) {
   const schema = Joi.object({
     email: Joi.string().email().min(1).max(255).required(),
     password: passwordComplexity()

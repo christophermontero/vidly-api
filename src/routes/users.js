@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const { User, validateUser } = require('../models/user-model');
 const auth = require('../middleware/auth-middleware');
+const validate = require('../middleware/validate');
 
 const router = express.Router();
 
@@ -13,10 +14,7 @@ router.get('/me', auth, async (req, res) => {
 });
 
 // Creating a user
-router.post('/', auth, async (req, res) => {
-  const { error } = validateUser(req.body);
-  if (error) return res.status(400).send(error);
-
+router.post('/', [auth, validate(validateUser)], async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).send('User already registered.');
 
