@@ -3,11 +3,11 @@ const winston = require('winston');
 const loggerEx = require('./src/middleware/logger');
 const app = express();
 
-require('./startup/logging')(loggerEx, app);
-require('./startup/routes')(app);
-require('./startup/db')(app);
-require('./startup/config')();
-require('./startup/validation')();
+require('./src/startup/logging')(loggerEx, app);
+require('./src/startup/routes')(app);
+require('./src/startup/db')(app);
+require('./src/startup/config')();
+require('./src/startup/validation')();
 
 const port = process.env.PORT || 3000;
 
