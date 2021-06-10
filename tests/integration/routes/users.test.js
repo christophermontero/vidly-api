@@ -10,6 +10,7 @@ describe('/api/users', () => {
 
   afterAll(async () => {
     await server.close();
+    await mongoose.disconnect();
   });
 
   afterEach(async () => {

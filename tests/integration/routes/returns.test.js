@@ -23,6 +23,7 @@ describe('/api/returns', () => {
 
   afterAll(async () => {
     await server.close();
+    await mongoose.disconnect();
   });
 
   beforeEach(async () => {

@@ -18,6 +18,7 @@ describe('/api/rentals', () => {
     await Customer.deleteMany({});
     await Movie.deleteMany({});
     await Genre.deleteMany({});
+    await mongoose.disconnect();
   });
 
   describe('GET /', () => {

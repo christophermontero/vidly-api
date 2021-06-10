@@ -12,6 +12,7 @@ describe('auth middleware', () => {
 
   afterAll(async () => {
     await server.close();
+    await mongoose.disconnect();
   });
 
   afterEach(async () => {

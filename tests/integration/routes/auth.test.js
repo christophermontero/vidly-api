@@ -11,6 +11,7 @@ describe('/api/auth', () => {
 
   afterAll(async () => {
     await server.close();
+    await mongoose.disconnect();
   });
 
   describe('POST /', () => {

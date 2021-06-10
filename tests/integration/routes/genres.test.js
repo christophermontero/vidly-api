@@ -11,6 +11,7 @@ describe('/api/genres', () => {
 
   afterAll(async () => {
     await server.close();
+    await mongoose.disconnect();
   });
 
   afterEach(async () => {
