@@ -1,5 +1,6 @@
 const express = require('express');
 const { Rental, validateRental } = require('../models/rental-model');
+const { Movie } = require('../models/movie-model');
 const auth = require('../middleware/auth-middleware');
 const moment = require('moment');
 // const validateObjectId = require('../middleware/validateObjectId');
@@ -18,6 +19,13 @@ router.post('/', auth, async (req, res) => {
 
   if (!rental) return res.status(404).send('Rental not found');
   if (rental.dateReturned) return res.status(400).send('Return is alredy processed');
+
+  await Movie.updateOne(
+    { _id: rental.movie._id },
+    {
+      $inc: { numberInStock: 1 }
+    }
+  );
 
   rental.dateReturned = new Date();
   const rentalDays = moment().diff(rental.dateOut, 'days');
