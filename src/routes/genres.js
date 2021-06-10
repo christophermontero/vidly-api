@@ -2,6 +2,7 @@ const express = require('express');
 const { Genre, validateGenre } = require('../models/genre-model');
 const auth = require('../middleware/auth-middleware');
 const admin = require('../middleware/admin');
+const validate = require('../middleware/validate');
 const validateObjectId = require('../middleware/validateObjectId');
 
 const router = express.Router();
@@ -22,10 +23,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 });
 
 // Creating a genre
-router.post('/', auth, async (req, res) => {
-  const { error } = validateGenre(req.body);
-  if (error) return res.status(400).send(error);
-
+router.post('/', [auth, validate(validateGenre)], async (req, res) => {
   const genre = new Genre({ name: req.body.name });
   const document = await genre.save();
 
@@ -33,10 +31,7 @@ router.post('/', auth, async (req, res) => {
 });
 
 // Updating a genre
-router.put('/:id', [auth, validateObjectId], async (req, res) => {
-  const { error } = validateGenre(req.body);
-  if (error) return res.status(400).send(error);
-
+router.put('/:id', [auth, validateObjectId, validate(validateGenre)], async (req, res) => {
   const genre = await Genre.findByIdAndUpdate(
     req.params.id,
     { name: req.body.name },
