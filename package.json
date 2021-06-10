@@ -1,0 +1,23 @@
+{
+  "name": "vidly-api",
+  "version": "1.0.0",
+  "description": "Vidly is a backend from a rental movie app using nodejs ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christophermontero/vidly-api.git"
+  },
+  "keywords": [
+    "nodejs",
+    "api"
+  ],
+  "author": "giocom21",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/christophermontero/vidly-api/issues"
+  },
+  "homepage": "https://github.com/christophermontero/vidly-api#readme"
+}
