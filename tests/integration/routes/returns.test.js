@@ -1,5 +1,6 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
+const moment = require('moment');
 const { Rental } = require('../../../src/models/rental-model');
 const { User } = require('../../../src/models/user-model');
 let server;
@@ -106,7 +107,7 @@ describe('/api/returns', () => {
     expect(rentalInDb).toHaveProperty('movie.dailyRentalRate', rental.movie.dailyRentalRate);
   });
 
-  it('should return the date', async () => {
+  it('should set the return date if input is valid', async () => {
     await exec();
 
     const rentalInDb = await Rental.findOne({
@@ -123,5 +124,16 @@ describe('/api/returns', () => {
     expect(rentalInDb).toHaveProperty('movie.dailyRentalRate', rental.movie.dailyRentalRate);
     expect(rentalInDb.dateReturned).toBeDefined();
     expect(diff).toBeLessThan(10 * 1000);
+  });
+
+  it('should set the rental fee if input is valid', async () => {
+    rental.dateOut = moment().add(-7, 'days').toDate();
+    await rental.save();
+
+    await exec();
+
+    const rentalInDb = await Rental.findById(rental._id);
+
+    expect(rentalInDb.rentalFee).toBe(14);
   });
 });

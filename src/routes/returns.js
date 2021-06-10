@@ -1,6 +1,7 @@
 const express = require('express');
 const { Rental, validateRental } = require('../models/rental-model');
 const auth = require('../middleware/auth-middleware');
+const moment = require('moment');
 // const validateObjectId = require('../middleware/validateObjectId');
 
 const router = express.Router();
@@ -19,6 +20,8 @@ router.post('/', auth, async (req, res) => {
   if (rental.dateReturned) return res.status(400).send('Return is alredy processed');
 
   rental.dateReturned = new Date();
+  const rentalDays = moment().diff(rental.dateOut, 'days');
+  rental.rentalFee = rentalDays * rental.movie.dailyRentalRate;
 
   await rental.save();
 
