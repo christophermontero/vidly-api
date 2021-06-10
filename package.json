@@ -4,7 +4,7 @@
   "description": "Services for renting out movies",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --verbose --maxWorkers=1 --coverage",
+    "test": "NODE_ENV=test jest --watchAll --verbose --maxWorkers=1 --coverage",
     "linter": "eslint --fix \"./**/*.js\""
   },
   "keywords": [
