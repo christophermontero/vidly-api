@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll --verbose --maxWorkers=1 --coverage",
-    "linter": "eslint --fix \"./**/*.js\"",
-    "format": "prettier --write \"./**/*.{js,json}\""
+    "linter": "eslint --fix \"./**/*.js\""
   },
   "keywords": [
     "api",
@@ -36,7 +35,13 @@
     "eslint": "^7.26.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^2.7.0",
     "jest": "^27.0.3",
     "supertest": "^6.1.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run linter"
+    }
   }
 }
