@@ -18,11 +18,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy to Heroku 📡
+        if: ${{ github.event_name != 'pull_request' }}
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
         env:
-          VIDLY_JWTPRIVATEKEY: ${{ secrets.VIDLY_JWTPRIVATEKEY }}
+          HD_VIDLY_JWTPRIVATEKEY: ${{ secrets.VIDLY_JWTPRIVATEKEY }}
           NODE_ENV: production
