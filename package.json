@@ -4,8 +4,13 @@
   "description": "Services for renting out movies",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "start:dev": "DEBUG=app:startup node index.js",
     "test": "NODE_ENV=test jest --verbose --maxWorkers=1 --coverage",
     "linter": "eslint --fix \"./**/*.js\""
+  },
+  "engines": {
+    "node": "14.16.1"
   },
   "keywords": [
     "api",
