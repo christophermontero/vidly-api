@@ -26,7 +26,7 @@ module.exports = function (logger, app) {
     winston.add(
       new winston.transports.MongoDB({
         db: config.get('db'),
-        level: 'error',
+        level: 'info',
         options: { useUnifiedTopology: true }
       })
     );
