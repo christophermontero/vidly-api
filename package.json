@@ -1,23 +1,62 @@
 {
   "name": "vidly-api",
   "version": "1.0.0",
-  "description": "Vidly is a backend from a rental movie app using nodejs ",
+  "description": "Services for renting out movies",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/christophermontero/vidly-api.git"
   },
-  "keywords": [
-    "nodejs",
-    "api"
-  ],
   "author": "giocom21",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/christophermontero/vidly-api/issues"
   },
-  "homepage": "https://github.com/christophermontero/vidly-api#readme"
+  "homepage": "https://github.com/christophermontero/vidly-api#readme",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "DEBUG=app:startup node index.js",
+    "test": "NODE_ENV=test jest --verbose --maxWorkers=1 --coverage",
+    "linter": "eslint --fix \"./**/*.js\""
+  },
+  "engines": {
+    "node": "14.16.1"
+  },
+  "keywords": [
+    "api",
+    "renting",
+    "movies"
+  ],
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
+    "config": "^3.3.6",
+    "debug": "^4.3.1",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^4.6.0",
+    "joi": "^17.4.0",
+    "joi-objectid": "^3.0.1",
+    "joi-password-complexity": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.9",
+    "morgan": "^1.10.0",
+    "winston": "^3.3.3",
+    "winston-mongodb": "^5.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.26.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^2.7.0",
+    "jest": "^27.0.3",
+    "supertest": "^6.1.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run linter"
+    }
+  }
 }
