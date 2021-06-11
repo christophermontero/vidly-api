@@ -11,39 +11,6 @@ on:
     branches: [master]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js 🚨
-        uses: actions/setup-node@v2
-        with:
-          node-version: "12.x"
-
-      - name: Start MongoDB 💾
-        uses: supercharge/mongodb-github-action@1.6.0
-        with:
-          mongodb-version: "3"
-
-      - name: Cache Node.js modules ⏰
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
-
-      - name: Install dependencies 🔧
-        run: npm install
-
-      - name: Test 🧪
-        run: npm test
-        env:
-          CI: true
-
   heroku:
     runs-on: ubuntu-latest
     steps:
@@ -80,13 +47,13 @@ jobs:
               password $HEROKU_API_KEY
           EOF
         env:
-          $HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          $HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
 
       - name: Add Heroku remote
         run: heroku git:remote --app $HEROKU_APP_NAME 
         env:
-          $HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
 
       - name: Push to Heroku
         run: git push heroku master
