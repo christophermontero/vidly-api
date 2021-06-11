@@ -25,3 +25,4 @@ jobs:
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
         env:
           VIDLY_JWTPRIVATEKEY: ${{ secrets.VIDLY_JWTPRIVATEKEY }}
+          NODE_ENV: production

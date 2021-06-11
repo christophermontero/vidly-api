@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/christophermontero/vidly-api#readme",
   "scripts": {
-    "start": "node index.js",
+    "start": "NODE_ENV=production node index.js",
     "start:dev": "DEBUG=app:startup node index.js",
     "test": "NODE_ENV=test jest --verbose --maxWorkers=1 --coverage",
     "linter": "eslint --fix \"./**/*.js\""
