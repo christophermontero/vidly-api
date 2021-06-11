@@ -6,14 +6,12 @@ const genres = require('../routes/genres');
 const customers = require('../routes/customers');
 const returns = require('../routes/returns');
 const error = require('../middleware/error');
-const helmet = require('helmet');
 const express = require('express');
 const debug = require('debug')('app:startup');
 const morgan = require('morgan');
 
 module.exports = function (app) {
   app.use(express.json());
-  app.use(helmet());
 
   if (app.get('env') === 'development') {
     app.use(morgan('dev'));

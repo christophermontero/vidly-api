@@ -4,8 +4,13 @@
   "description": "Services for renting out movies",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "start:dev": "DEBUG=app:startup node index.js",
     "test": "NODE_ENV=test jest --verbose --maxWorkers=1 --coverage",
     "linter": "eslint --fix \"./**/*.js\""
+  },
+  "engines": {
+    "node": "14.16.1"
   },
   "keywords": [
     "api",
@@ -16,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
     "config": "^3.3.6",
     "debug": "^4.3.1",
     "express": "^4.17.1",
