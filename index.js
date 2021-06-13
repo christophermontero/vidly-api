@@ -1,9 +1,9 @@
 const express = require('express');
 const winston = require('winston');
-const loggerEx = require('./src/middleware/logger');
+
 const app = express();
 
-require('./src/startup/logging')(loggerEx, app);
+require('./src/startup/logging')(app);
 require('./src/startup/routes')(app);
 require('./src/startup/db')(app);
 require('./src/startup/config')();
