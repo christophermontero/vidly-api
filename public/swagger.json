@@ -1,0 +1,406 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "vidly-api",
+    "version": "1.0",
+    "description": "# vidly-api\nVidly is a backend from a rental movie app using nodejs",
+    "contact": {
+      "name": "Christopher Ortiz Montero",
+      "email": "cgortizm@gmail.com"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://super-vidly-api.herokuapp.com",
+      "description": "production"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "development"
+    }
+  ],
+  "paths": {
+    "/api/genres{genreId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/genreId"
+        }
+      ],
+      "get": {
+        "summary": "Get Genre Info by Genre ID",
+        "tags": [
+          "Genre"
+        ],
+        "operationId": "get-genres-genreId",
+        "description": "Retrieve the information of the genre with the matching genre ID.",
+        "security": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Genre"
+          },
+          "404": {
+            "description": "The genre with the given ID was not found."
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Genre Info by Genre ID",
+        "operationId": "put-genres-genreId",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Genre"
+          },
+          "400": {
+            "$ref": "#/components/responses/Invalid-input"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "The genre with the given ID was not found."
+          }
+        },
+        "description": "Update a genre.",
+        "security": [
+          {
+            "JSON Web Token": []
+          }
+        ],
+        "tags": [
+          "Genre"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Genre"
+              },
+              "examples": {}
+            }
+          },
+          "description": "Request body to update a genre."
+        }
+      },
+      "delete": {
+        "summary": "Delete Genre by Genre ID",
+        "operationId": "delete-genres-genreId",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Genre"
+          },
+          "400": {
+            "description": "Invalid token."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "The genre with the given ID was not found."
+          }
+        },
+        "description": "Delete a genre.",
+        "security": [
+          {
+            "JSON Web Token": []
+          }
+        ],
+        "tags": [
+          "Genre"
+        ]
+      }
+    },
+    "/api/genres": {
+      "post": {
+        "summary": "Create New Genre",
+        "operationId": "post-genre",
+        "description": "Create a new genre.",
+        "tags": [
+          "Genre"
+        ],
+        "security": [
+          {
+            "JSON Web Token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Genre"
+          },
+          "400": {
+            "$ref": "#/components/responses/Invalid-input"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Genre"
+              },
+              "examples": {}
+            }
+          },
+          "description": "Request body to create a new genre."
+        }
+      },
+      "parameters": [],
+      "get": {
+        "summary": "Get All Genre",
+        "operationId": "get-genres",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "minLength": 24,
+                        "maxLength": 24,
+                        "description": "Genre id."
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 5,
+                        "maxLength": 50,
+                        "description": "Genre name."
+                      },
+                      "__v": {
+                        "type": "number",
+                        "description": "Genre version."
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "genres": {
+                    "value": [
+                      {
+                        "_id": "60c3e53f7529a79739cce059",
+                        "name": "action",
+                        "__v": 0
+                      },
+                      {
+                        "_id": "60c63dccbc31762ffed425cd",
+                        "name": "thriller",
+                        "__v": 0
+                      },
+                      {
+                        "_id": "60c3e49d7529a79739cce056",
+                        "name": "western",
+                        "__v": 0
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Retrieve the information of all genres.",
+        "security": [],
+        "tags": [
+          "Genre"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Genre": {
+        "description": "Genre model.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Genre name.",
+            "minLength": 5,
+            "maxLength": 50
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "x-examples": {}
+      }
+    },
+    "securitySchemes": {
+      "JSON Web Token": {
+        "name": "x-auth-token",
+        "type": "apiKey",
+        "in": "header"
+      }
+    },
+    "parameters": {
+      "genreId": {
+        "name": "genreId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 24,
+          "maxLength": 24,
+          "example": "60c3ea9368556b0015a42cf8"
+        },
+        "description": "Mongo id to retrive a genre object"
+      }
+    },
+    "responses": {
+      "Genre": {
+        "description": "Genre response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Genre id.",
+                  "minLength": 24,
+                  "maxLength": 24
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Genre name.",
+                  "minLength": 5,
+                  "maxLength": 50
+                },
+                "__v": {
+                  "type": "number",
+                  "description": "Genre version."
+                }
+              }
+            },
+            "examples": {
+              "action-genre": {
+                "value": {
+                  "_id": "60c3ea9368556b0015a42cf8",
+                  "name": "action",
+                  "__v": 0
+                }
+              }
+            }
+          }
+        }
+      },
+      "Invalid-input": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "_original": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "details": {
+                  "type": "array",
+                  "uniqueItems": false,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      },
+                      "path": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "context": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "number"
+                          },
+                          "key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "invalid-input-name": {
+                "value": {
+                  "_original": {
+                    "name": 1
+                  },
+                  "details": [
+                    {
+                      "message": "\"name\" must be a string",
+                      "path": [
+                        "name"
+                      ],
+                      "type": "string.base",
+                      "context": {
+                        "label": "name",
+                        "value": 1,
+                        "key": "name"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "x-auth-token": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Customer"
+    },
+    {
+      "name": "Genre"
+    },
+    {
+      "name": "Movie"
+    },
+    {
+      "name": "Rental"
+    },
+    {
+      "name": "User"
+    }
+  ]
+}
