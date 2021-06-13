@@ -6,6 +6,7 @@ const genres = require('../routes/genres');
 const customers = require('../routes/customers');
 const returns = require('../routes/returns');
 const error = require('../middleware/error');
+// const logger = require('../middleware/logger');
 const express = require('express');
 const debug = require('debug')('app:startup');
 const morgan = require('morgan');
@@ -18,6 +19,7 @@ module.exports = function (app) {
     debug('Morgan enabled');
   }
 
+  // app.use(logger);
   app.use('/api/genres', genres);
   app.use('/api/customers', customers);
   app.use('/api/movies', movies);

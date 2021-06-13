@@ -38,7 +38,9 @@ router.put('/:id', [auth, validateObjectId, validate(validateGenre)], async (req
     { new: true }
   );
 
-  if (!genre) return res.status(404).send('The genre with the given ID was not found.');
+  if (!genre) {
+    res.status(404).send('The genre with the given ID was not found.');
+  }
 
   res.send(genre);
 });

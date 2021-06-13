@@ -1,8 +1,7 @@
 const winston = require('winston');
-require('winston-mongodb');
 
-const loggerEx = winston.createLogger({
-  format: winston.format.simple()
-});
+module.exports = function (req, res, next) {
+  winston.http({ message: `Request to ${req.originalUrl}`, metadata: req });
 
-module.exports = loggerEx;
+  next();
+};
