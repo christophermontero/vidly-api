@@ -12,18 +12,9 @@ module.exports = function (app) {
     })
   );
 
-  // logger.exceptions.handle(new winston.transports.File({ filename: 'uncaughtExceptions.log' }));
-
   process.on('unhandledRejection', (ex) => {
     throw ex;
   });
-
-  // winston.add(
-  //   new winston.transports.File({
-  //     filename: 'logfile.log',
-  //     format: winston.format.combine(winston.format.timestamp(), winston.format.prettyPrint())
-  //   })
-  // );
 
   winston.add(
     new winston.transports.Console({
@@ -54,7 +45,7 @@ module.exports = function (app) {
         format: winston.format.json(),
         msg: '{{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
         requestWhitelist: ['url', 'headers', 'method', 'httpVersion', 'query', 'params', 'body'],
-        responseWhitelist: ['_headers', 'statusCode', 'statusMessage'],
+        responseWhitelist: ['statusCode', 'statusMessage'],
         expressFormat: false,
         colorize: false,
         statusLevels: false,
