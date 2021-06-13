@@ -5,25 +5,25 @@ const config = require('config');
 require('express-async-errors');
 
 module.exports = function (app) {
-  winston.exceptions.handle(
-    new winston.transports.MongoDB({
-      db: config.get('db'),
-      options: { useUnifiedTopology: true }
-    })
-  );
-
-  process.on('unhandledRejection', (ex) => {
-    throw ex;
-  });
-
-  winston.add(
-    new winston.transports.Console({
-      format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
-      handleExceptions: true
-    })
-  );
-
   if (app.get('env') !== 'test') {
+    winston.exceptions.handle(
+      new winston.transports.MongoDB({
+        db: config.get('db'),
+        options: { useUnifiedTopology: true }
+      })
+    );
+
+    process.on('unhandledRejection', (ex) => {
+      throw ex;
+    });
+
+    winston.add(
+      new winston.transports.Console({
+        format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
+        handleExceptions: true
+      })
+    );
+
     winston.add(
       new winston.transports.MongoDB({
         db: config.get('db'),
