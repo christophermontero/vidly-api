@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "vidly-api",
+    "title": "Vidly API",
     "version": "1.0",
     "description": "# vidly-api\nVidly is a backend from a rental movie app using nodejs",
     "contact": {
@@ -11,7 +11,8 @@
     "license": {
       "name": "MIT License",
       "url": "https://opensource.org/licenses/MIT"
-    }
+    },
+    "termsOfService": "http://swagger.io/terms"
   },
   "servers": [
     {
@@ -35,7 +36,7 @@
         "tags": [
           "Genre"
         ],
-        "operationId": "get-genres-genreId",
+        "operationId": "get-genreId",
         "description": "Retrieve the information of the genre with the matching genre ID.",
         "security": [],
         "responses": {
@@ -49,13 +50,13 @@
       },
       "put": {
         "summary": "Update Genre Info by Genre ID",
-        "operationId": "put-genres-genreId",
+        "operationId": "put-genreId",
         "responses": {
           "200": {
             "$ref": "#/components/responses/Genre"
           },
           "400": {
-            "$ref": "#/components/responses/Invalid-input"
+            "$ref": "#/components/responses/Invalid-input-genre"
           },
           "401": {
             "description": "Unauthorized"
@@ -79,7 +80,13 @@
               "schema": {
                 "$ref": "#/components/schemas/Genre"
               },
-              "examples": {}
+              "examples": {
+                "action-genre": {
+                  "value": {
+                    "name": "action"
+                  }
+                }
+              }
             }
           },
           "description": "Request body to update a genre."
@@ -87,7 +94,7 @@
       },
       "delete": {
         "summary": "Delete Genre by Genre ID",
-        "operationId": "delete-genres-genreId",
+        "operationId": "delete-genreId",
         "responses": {
           "200": {
             "$ref": "#/components/responses/Genre"
@@ -134,7 +141,7 @@
             "$ref": "#/components/responses/Genre"
           },
           "400": {
-            "$ref": "#/components/responses/Invalid-input"
+            "$ref": "#/components/responses/Invalid-input-genre"
           },
           "401": {
             "description": "Unauthorized"
@@ -146,7 +153,13 @@
               "schema": {
                 "$ref": "#/components/schemas/Genre"
               },
-              "examples": {}
+              "examples": {
+                "action-genre": {
+                  "value": {
+                    "name": "action"
+                  }
+                }
+              }
             }
           },
           "description": "Request body to create a new genre."
@@ -154,7 +167,7 @@
       },
       "parameters": [],
       "get": {
-        "summary": "Get All Genre",
+        "summary": "Get All Genres",
         "operationId": "get-genres",
         "responses": {
           "200": {
@@ -219,6 +232,245 @@
           "Genre"
         ]
       }
+    },
+    "/api/movies/{movieId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/movieId"
+        }
+      ],
+      "get": {
+        "summary": "Get Movie Info by Movie ID",
+        "tags": [
+          "Movie"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Movie"
+          },
+          "404": {
+            "description": "The movie with the given ID was not found."
+          }
+        },
+        "operationId": "get-movieId",
+        "description": "Retrieve the information of the movie with the matching movie ID.",
+        "security": []
+      },
+      "put": {
+        "summary": "Update Movie Info by Movie ID",
+        "operationId": "put-movieId",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Movie"
+          },
+          "400": {
+            "$ref": "#/components/responses/Invalid-input-movie"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "description": "Update a movie.",
+        "security": [
+          {
+            "JSON Web Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Movie"
+              },
+              "examples": {
+                "enter-the-dragon": {
+                  "value": {
+                    "title": "enter the dragon",
+                    "genreId": "60c3e53f7529a79739cce059",
+                    "numberInStock": 10,
+                    "dailyRentalRate": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Movie"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Movie by Movie ID",
+        "operationId": "delete-movieId",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Movie"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "The movie with the given ID was not found."
+          }
+        },
+        "description": "Delete a movie.",
+        "security": [
+          {
+            "JSON Web Token": []
+          }
+        ],
+        "tags": [
+          "Movie"
+        ]
+      }
+    },
+    "/api/movies": {
+      "get": {
+        "summary": "Get All Movies",
+        "tags": [
+          "Movie"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "_id",
+                      "title",
+                      "genre",
+                      "numberInStock",
+                      "dailyRentalRate",
+                      "__v"
+                    ],
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "genre": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "_id",
+                          "name"
+                        ]
+                      },
+                      "numberInStock": {
+                        "type": "number"
+                      },
+                      "dailyRentalRate": {
+                        "type": "number"
+                      },
+                      "__v": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "movies": {
+                    "value": [
+                      {
+                        "_id": "60c3e4e97529a79739cce057",
+                        "title": "enter the dragon",
+                        "genre": {
+                          "_id": "60c3e53f7529a79739cce059",
+                          "name": "action"
+                        },
+                        "numberInStock": 10,
+                        "dailyRentalRate": 2,
+                        "__v": 0
+                      },
+                      {
+                        "_id": "60c65c8f2e5aa43b112057e0",
+                        "title": "rango",
+                        "genre": {
+                          "_id": "60c3e49d7529a79739cce056",
+                          "name": "western"
+                        },
+                        "numberInStock": 4,
+                        "dailyRentalRate": 2,
+                        "__v": 0
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-movies",
+        "description": "Retrieve the information of all movies.",
+        "security": []
+      },
+      "post": {
+        "summary": "Create New Movie",
+        "operationId": "post-movies",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Movie"
+          },
+          "400": {
+            "$ref": "#/components/responses/Invalid-input-movie"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "description": "Create a new movie.",
+        "security": [
+          {
+            "JSON Web Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Movie"
+              },
+              "examples": {
+                "enter-the-dragon": {
+                  "value": {
+                    "title": "enter the dragon",
+                    "genreId": "60c3e53f7529a79739cce059",
+                    "numberInStock": 10,
+                    "dailyRentalRate": 2
+                  }
+                }
+              }
+            }
+          },
+          "description": "Request body to create a new movie."
+        },
+        "tags": [
+          "Movie"
+        ]
+      }
     }
   },
   "components": {
@@ -238,6 +490,43 @@
           "name"
         ],
         "x-examples": {}
+      },
+      "Movie": {
+        "description": "Movie model.",
+        "type": "object",
+        "x-examples": {},
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Movie title.",
+            "maxLength": 50,
+            "minLength": 2
+          },
+          "genreId": {
+            "type": "string",
+            "description": "Genre id.",
+            "minLength": 24,
+            "maxLength": 24
+          },
+          "numberInStock": {
+            "type": "number",
+            "description": "Number of movies in stock.",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "dailyRentalRate": {
+            "type": "number",
+            "description": "Price to rental a movie by one day.",
+            "minimum": 0,
+            "maximum": 255
+          }
+        },
+        "required": [
+          "title",
+          "genreId",
+          "numberInStock",
+          "dailyRentalRate"
+        ]
       }
     },
     "securitySchemes": {
@@ -259,11 +548,23 @@
           "example": "60c3ea9368556b0015a42cf8"
         },
         "description": "Mongo id to retrive a genre object"
+      },
+      "movieId": {
+        "name": "movieId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 24,
+          "maxLength": 24,
+          "example": "60c3e4e97529a79739cce057"
+        },
+        "description": "Mongo id to retrive a movie object"
       }
     },
     "responses": {
       "Genre": {
-        "description": "Genre response",
+        "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
@@ -300,7 +601,7 @@
           }
         }
       },
-      "Invalid-input": {
+      "Invalid-input-genre": {
         "description": "Bad Request",
         "content": {
           "application/json": {
@@ -378,6 +679,178 @@
             }
           }
         }
+      },
+      "Movie": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "minLength": 24,
+                  "maxLength": 24,
+                  "description": "Movie id."
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Movie title.",
+                  "minLength": 2,
+                  "maxLength": 50
+                },
+                "genre": {
+                  "type": "object",
+                  "description": "Movie genre.",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Genre id.",
+                      "minLength": 24,
+                      "maxLength": 24
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Genre name.",
+                      "minLength": 5,
+                      "maxLength": 50
+                    }
+                  }
+                },
+                "numberInStock": {
+                  "type": "number",
+                  "description": "Number of movies in stock.",
+                  "minimum": 0,
+                  "maximum": 255
+                },
+                "dailyRentalRate": {
+                  "type": "number",
+                  "description": "Price to rental a movie by one day.",
+                  "minimum": 0,
+                  "maximum": 255
+                },
+                "__v": {
+                  "type": "number",
+                  "description": "Movie version."
+                }
+              }
+            },
+            "examples": {
+              "enter-the-dragon": {
+                "value": {
+                  "_id": "60c3e4e97529a79739cce057",
+                  "title": "enter the dragon",
+                  "genre": {
+                    "_id": "60c3e53f7529a79739cce059",
+                    "name": "action"
+                  },
+                  "numberInStock": 10,
+                  "dailyRentalRate": 2,
+                  "__v": 0
+                }
+              }
+            }
+          }
+        }
+      },
+      "Invalid-input-movie": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "_original": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "genreId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "numberInStock": {
+                      "type": "boolean"
+                    },
+                    "dailyRentalRate": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "details": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "path": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "context": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "boolean"
+                          },
+                          "key": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "invalid-input-stock": {
+                "value": {
+                  "_original": {
+                    "title": "enter the dragon",
+                    "genreId": "60c3e53f7529a79739cce059",
+                    "numberInStock": true,
+                    "dailyRentalRate": 2
+                  },
+                  "details": [
+                    {
+                      "message": "\"numberInStock\" must be a number",
+                      "path": [
+                        "numberInStock"
+                      ],
+                      "type": "number.base",
+                      "context": {
+                        "label": "numberInStock",
+                        "value": true,
+                        "key": "numberInStock"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -388,19 +861,10 @@
   ],
   "tags": [
     {
-      "name": "Customer"
-    },
-    {
       "name": "Genre"
     },
     {
       "name": "Movie"
-    },
-    {
-      "name": "Rental"
-    },
-    {
-      "name": "User"
     }
   ]
 }
