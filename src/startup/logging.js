@@ -46,6 +46,7 @@ module.exports = function (app) {
         msg: '{{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
         requestWhitelist: ['url', 'headers', 'method', 'httpVersion', 'query', 'params', 'body'],
         responseWhitelist: ['statusCode', 'statusMessage'],
+        bodyBlacklist: ['password'],
         expressFormat: false,
         colorize: false,
         statusLevels: false,
