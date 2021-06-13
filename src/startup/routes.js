@@ -18,6 +18,7 @@ module.exports = function (app) {
     debug('Morgan enabled');
   }
 
+  app.use(express.static('public'));
   app.use('/api/genres', genres);
   app.use('/api/customers', customers);
   app.use('/api/movies', movies);
