@@ -350,38 +350,47 @@
                       "_id": {
                         "type": "string",
                         "minLength": 24,
-                        "maxLength": 24
+                        "maxLength": 24,
+                        "description": "Movie id."
                       },
                       "title": {
                         "type": "string",
                         "minLength": 2,
-                        "maxLength": 50
+                        "maxLength": 50,
+                        "description": "Movie title."
                       },
                       "genre": {
                         "type": "object",
-                        "required": [
-                          "_id",
-                          "name"
-                        ],
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "minLength": 1
+                            "description": "Genre id.",
+                            "minLength": 24,
+                            "maxLength": 24
                           },
                           "name": {
                             "type": "string",
-                            "minLength": 1
+                            "description": "Genre name.",
+                            "minLength": 5,
+                            "maxLength": 50
                           }
                         }
                       },
                       "numberInStock": {
-                        "type": "number"
+                        "type": "number",
+                        "description": "Number of movies in stock.",
+                        "minimum": 0,
+                        "maximum": 255
                       },
                       "dailyRentalRate": {
-                        "type": "number"
+                        "type": "number",
+                        "description": "Price to rental a movie by one day.",
+                        "minimum": 0,
+                        "maximum": 255
                       },
                       "__v": {
-                        "type": "number"
+                        "type": "number",
+                        "description": "Movie version."
                       }
                     }
                   }
