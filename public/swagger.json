@@ -3,10 +3,10 @@
   "info": {
     "title": "Vidly API",
     "version": "1.0",
-    "description": "# vidly-api\nVidly is a backend from a rental movie app using nodejs",
+    "description": "# Introduction\nVidly is a backend from a rental movie app using nodejs",
     "contact": {
       "name": "Christopher Ortiz Montero",
-      "email": "cgortizm@gmail.com"
+      "email": "cgortizm21@gmail.com"
     },
     "license": {
       "name": "MIT License",
@@ -65,7 +65,7 @@
             "description": "The genre with the given ID was not found."
           }
         },
-        "description": "Update a genre.",
+        "description": "Update the information of genre with the matching genre ID.",
         "security": [
           {
             "JSON Web Token": []
@@ -112,7 +112,7 @@
             "description": "The genre with the given ID was not found."
           }
         },
-        "description": "Delete a genre.",
+        "description": "Delete the information of genre with the matching genre ID.",
         "security": [
           {
             "JSON Web Token": []
@@ -127,7 +127,7 @@
       "post": {
         "summary": "Create New Genre",
         "operationId": "post-genre",
-        "description": "Create a new genre.",
+        "description": "Create a new genre using the required fields.",
         "tags": [
           "Genre"
         ],
