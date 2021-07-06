@@ -270,7 +270,7 @@
             "description": "Unauthorized"
           }
         },
-        "description": "Update a movie.",
+        "description": "Update the information of movie with the matching movie ID.",
         "security": [
           {
             "JSON Web Token": []
@@ -293,7 +293,8 @@
                 }
               }
             }
-          }
+          },
+          "description": "Request body to update a movie."
         },
         "tags": [
           "Movie"
@@ -316,7 +317,7 @@
             "description": "The movie with the given ID was not found."
           }
         },
-        "description": "Delete a movie.",
+        "description": "Delete the information of movie with the matching movie ID.",
         "security": [
           {
             "JSON Web Token": []
@@ -345,25 +346,23 @@
                   "uniqueItems": true,
                   "items": {
                     "type": "object",
-                    "required": [
-                      "_id",
-                      "title",
-                      "genre",
-                      "numberInStock",
-                      "dailyRentalRate",
-                      "__v"
-                    ],
                     "properties": {
                       "_id": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 24,
+                        "maxLength": 24
                       },
                       "title": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 2,
+                        "maxLength": 50
                       },
                       "genre": {
                         "type": "object",
+                        "required": [
+                          "_id",
+                          "name"
+                        ],
                         "properties": {
                           "_id": {
                             "type": "string",
@@ -373,11 +372,7 @@
                             "type": "string",
                             "minLength": 1
                           }
-                        },
-                        "required": [
-                          "_id",
-                          "name"
-                        ]
+                        }
                       },
                       "numberInStock": {
                         "type": "number"
@@ -441,7 +436,7 @@
             "description": "Unauthorized"
           }
         },
-        "description": "Create a new movie.",
+        "description": "Create a new movie using the required fields.",
         "security": [
           {
             "JSON Web Token": []
@@ -766,12 +761,10 @@
                   "type": "object",
                   "properties": {
                     "title": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     },
                     "genreId": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     },
                     "numberInStock": {
                       "type": "boolean"
@@ -783,14 +776,12 @@
                 },
                 "details": {
                   "type": "array",
-                  "uniqueItems": true,
-                  "minItems": 1,
+                  "uniqueItems": false,
                   "items": {
                     "type": "object",
                     "properties": {
                       "message": {
-                        "type": "string",
-                        "minLength": 1
+                        "type": "string"
                       },
                       "path": {
                         "type": "array",
@@ -799,22 +790,19 @@
                         }
                       },
                       "type": {
-                        "type": "string",
-                        "minLength": 1
+                        "type": "string"
                       },
                       "context": {
                         "type": "object",
                         "properties": {
                           "label": {
-                            "type": "string",
-                            "minLength": 1
+                            "type": "string"
                           },
                           "value": {
                             "type": "boolean"
                           },
                           "key": {
-                            "type": "string",
-                            "minLength": 1
+                            "type": "string"
                           }
                         }
                       }
