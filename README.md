@@ -174,13 +174,13 @@ git clone https://github.com/christophermontero/vidly-api.git
 cd vidly-api
 ```
 
-Make sure you have MongoDB running before start the project in development mode. Note that the project uses default environment variables for this mode, you can set different values in default.json file.
+Make sure you have MongoDB running before start the project in development mode. Note that the project uses default environment variables for this mode, you can set different values in **default.json** file.
 
 ```bash
 npm start:dev
 ```
 
-or use this command for run in production. Further, you can find the environment variables names in custom-environment-variables.json file.
+or use this command for run in production. Further, you can find the environment variables names in **custom-environment-variables.json** file.
 
 ```bash
 npm start
